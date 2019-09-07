@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="metro4:locale" content="cn-ZH">
+	<link rel="stylesheet" th:href="@{/webjars/metroui/4.2.46/css/metro-all.min.css}">
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/metroui/4.2.46/js/metro.min.js}"></script>
+	<title>Jasypt Web</title>
+</head>
+<body>
+<div class="container">
+	<header class="text-center">
+		<h1>Jasypt Web</h1>
+	</header>
+	<section>
+		<form class="form" method="post" accept-charset="UTF-8">
+			<div class="form-group">
+				<label for="input">Input</label>
+				<input id="input" name="input" type="text" data-role="input"
+					   th:value="${input}">
+			</div>
+			<div class="form-group">
+				<label for="algorithm">Algorithm</label>
+				<select id="algorithm" name="algorithm" data-role="select">
+<!--					<option th:each="algorithm : ${T(org.jasypt.registry.AlgorithmRegistry).getAllPBEAlgorithms()}"-->
+					<option th:each="algorithm : ${T(cn.bromine0x23.jasypt.utility.Algorithms).getAllPBEAlgorithms()}"
+							th:value="${algorithm}" th:text="${algorithm}" th:selected="${algorithm} == ${config?.algorithm}">
+					</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" data-role="password">
+			</div>
+			<div class="form-group">
+				<button class="button success" th:formaction="@{/encrypt}">
+					<span class="mif-lock"></span> Encrypt
+				</button>
+				<button class="button alert" th:formaction="@{/decrypt}">
+					<span class="mif-unlock"></span> Decrypt
+				</button>
+			</div>
+			<div class="form-group">
+				<label for="output">Output</label>
+				<input id="output" name="output" type="text" data-role="input" readonly disabled th:value="${output}">
+			</div>
+		</form>
+	</section>
+</div>
+</body>
+</html>
